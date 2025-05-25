@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllJobs, getJobbyId, getpostedJob, getRecuriterJob } from "../AsynThunk/Job_oprations";
+import { deleteJobbyId, getAllJobs, getJobbyId, getpostedJob, getRecuriterJob } from "../AsynThunk/Job_oprations";
 
 const jobSlice = createSlice({
     name: "job",
@@ -7,6 +7,8 @@ const jobSlice = createSlice({
         jobs: [],
         loading: false,
         job : {}  ,
+        msg:"",
+        error:null
     },
     extraReducers: (builder) => {
         builder.addCase(getAllJobs.pending, (state) => {
@@ -52,6 +54,18 @@ const jobSlice = createSlice({
         builder.addCase(getRecuriterJob.rejected, (state) => {
             state.loading = false;
         });
+
+        builder.addCase(deleteJobbyId.pending, (state) => {
+            state.loading = true;
+          })
+        builder.addCase(deleteJobbyId.fulfilled, (state, action) => {
+            state.loading = false;
+            state.msg = action.payload
+          })
+        builder.addCase(deleteJobbyId.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+          });
     }
 });
 

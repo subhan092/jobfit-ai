@@ -25,3 +25,15 @@ export const logoutUser = createAsyncThunk("auth/logoutUser", async (_, { reject
         return rejectWithValue(error.response?.data?.message || "Failed to logout");
     }
 });
+
+export const deleteUserbyId = createAsyncThunk(
+    'deleteUserbyId',
+    async (id, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${USER_END_POINT}/user/delete/${id}`);
+        return response.data;
+      } catch (err) {
+        return rejectWithValue(err.response.data);
+      }
+    }
+  );

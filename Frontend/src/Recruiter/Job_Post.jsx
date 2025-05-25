@@ -22,11 +22,11 @@ const Job_Post = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { companies } = useSelector((state) => state.company);
- 
+
   useEffect(() => {
-   dispatch(fetchCompanies())
-  }, [dispatch])
-  
+    dispatch(fetchCompanies());
+  }, [dispatch]);
+
   const handleRegistor = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -38,24 +38,24 @@ const Job_Post = () => {
     formData.append("location", location);
     formData.append("jobType", jobType);
     formData.append("position", position);
-    formData.append("companyId", selectedCompany);  
-    
+    formData.append("companyId", selectedCompany);
+
     requirements.forEach((req, index) => {
-        formData.append(`requirements[${index}]`, req);
+      formData.append(`requirements[${index}]`, req);
     });
     console.log("Form Data:", {
-        title,
-        description,
-        requirements,
-        salary,
-        experienceLevel,
-        location,
-        jobType,
-        position,
+      title,
+      description,
+      requirements,
+      salary,
+      experienceLevel,
+      location,
+      jobType,
+      position,
       selectedCompany,
     });
 
-   console.log( formData.get("companyId"))
+    console.log(formData.get("companyId"));
 
     try {
       const response = await axios.post(`${JOB_API_END_POINT}/post`, formData, {
@@ -64,15 +64,15 @@ const Job_Post = () => {
       });
       if (response) {
         toast.success(response.data.message || "Job posted sucessfully");
-        setDescription("")
-        setTitle("")
-        setJobType("")
-        setRequirements("")
-        setSalary("")
-        setExperienceLevel("")
-        setPosition("")
-        setLocation("")
-        selectedCompany("")
+        setDescription("");
+        setTitle("");
+        setJobType("");
+        setRequirements("");
+        setSalary("");
+        setExperienceLevel("");
+        setPosition("");
+        setLocation("");
+        setSelectedCompany("");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Registration failed");
@@ -103,32 +103,31 @@ const Job_Post = () => {
           required
           className="input-field h-24"
         />
- 
-            {Array.isArray(requirements) &&
-  requirements.map((req, index) => (
-    <div className="flex items-center">
-    <input
-      key={index}
-      type="text"
-      placeholder="Requirement"
-      value={req}
-      onChange={(e) => {
-        const newReqs = [...requirements];
-        newReqs[index] = e.target.value;
-        setRequirements(newReqs);
-      }}
-      className="input-field"
-    />
-    <button
-              type="button"
-              onClick={() => setRequirements([...requirements, ""])}
-              className="bg-purple-700 text-white px-3 py-1 rounded"
-            >
-              +
-            </button>
-            </div>
-  ))}
 
+        {Array.isArray(requirements) &&
+          requirements.map((req, index) => (
+            <div className="flex items-center">
+              <input
+                key={index}
+                type="text"
+                placeholder="Requirement"
+                value={req}
+                onChange={(e) => {
+                  const newReqs = [...requirements];
+                  newReqs[index] = e.target.value;
+                  setRequirements(newReqs);
+                }}
+                className="input-field"
+              />
+              <button
+                type="button"
+                onClick={() => setRequirements([...requirements, ""])}
+                className="bg-purple-700 text-white px-3 py-1 rounded"
+              >
+                +
+              </button>
+            </div>
+          ))}
 
         <input
           type="text"
@@ -151,17 +150,24 @@ const Job_Post = () => {
           value={selectedCompany}
           onChange={(e) => setSelectedCompany(e.target.value)}
           className="input-field"
+          disabled={loading} // Disable when loading
         >
           {loading ? (
             <option>Loading...</option>
+          ) : companies && companies.length > 0 ? (
+            <>
+              <option value="">Select a company</option>
+              {companies.map((company) => (
+                <option key={company._id} value={company._id}>
+                  {company.name}
+                </option>
+              ))}
+            </>
           ) : (
-           companies && companies?.map((company) => (
-              <option key={company._id} value={company._id}>
-                {company.name}
-              </option>
-            ))
+            <option>No companies found</option>
           )}
         </select>
+
         <input
           type="text"
           placeholder="Location"

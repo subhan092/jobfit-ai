@@ -19,7 +19,7 @@ export const registor = async(req,resp)=>{
 
         const file = req.file 
         const fileUri = getDataUri(file) 
-       const uploadResponse = await cloudinary.uploader.upload(fileUri.content);
+       const uploadResponse = await cloudinary.uploader.upload(fileUri);
       
 
     if(!name || !email || !password || !role){
@@ -85,6 +85,12 @@ export const login = async (req, resp) => {
         if (!role) {
             return resp.status(400).json({
                 message: "Please select your role",
+                success: false
+            });
+        }
+        if (User.role != role) {
+            return resp.status(400).json({
+                message: "Invalid Role",
                 success: false
             });
         }
@@ -302,6 +308,23 @@ export const getUserById = async (req, res) => {
       res.status(200).json({ user, success: true });
     } catch (err) {
       res.status(500).json({ message: "Server error", success: false });
+    }
+  };
+
+  export const deleteUserById = async (req, res) => {
+    try {
+      const userId = req.params.id;
+      
+      const user = await userModel.findByIdAndDelete(userId);
+  
+      if (!user) {
+        return res.status(404).json({ message: "user not found" });
+      }
+  
+      res.status(200).json({ message: "User deleted successfully" });
+  
+    } catch (error) {
+      res.status(500).json({ message: `Error in deleting user: ${error.message}` });
     }
   };
   

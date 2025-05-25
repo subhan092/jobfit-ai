@@ -43,3 +43,15 @@ export const getRecuriterJob = createAsyncThunk("getRecuriterJob", async (id, { 
         return rejectWithValue(error.response?.data?.message || "Something went wrong");
     }
 });
+
+export const deleteJobbyId = createAsyncThunk(
+    'deleteJobbyId',
+    async (id, { rejectWithValue }) => {
+      try {
+        const response = await axios.get(`${JOB_API_END_POINT}/delete/${id}`);
+        return response.data;
+      } catch (err) {
+        return rejectWithValue(err.response.data);
+      }
+    }
+  );

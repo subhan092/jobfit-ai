@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../redux/reducers/authslice";
 import Navbar from "./ui/shared/Navbar";
 import Footer from "./Footer";
+import { looadUser } from "../redux/AsynThunk/User_Auth";
 
 const Registor = () => {
     const [role , setRole] = useState("");
@@ -42,9 +43,10 @@ const Registor = () => {
                withCredentials: true,
            });
            if (response.data.success) {
-               toast.success(response.data.message);
+             await  toast.success(response.data.message || "user register successfully");
            }
            navigate("/login");
+           
        } catch (error) {
            toast.error(error.response?.data?.message || "Registration failed");
            console.error("Error in registration", error);

@@ -62,7 +62,7 @@ console.log("hello")
   return (
     <>
     <Navbar/>
-    <div className="max-w-7xl mx-auto flex flex-col justify-center items-center hover:bg-black">
+    <div className="max-w-7xl mx-auto flex flex-col justify-center items-center">
       <form onSubmit={handleLogin} className="w-[80%] md:w-1/2 space-y-[1rem] py-4 mb-[2rem]">
         <h2 className="text-[2rem] font-bold font-sans ">Login</h2>
         <div className="">

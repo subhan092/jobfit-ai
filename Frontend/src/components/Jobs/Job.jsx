@@ -64,8 +64,11 @@ const Job = ({ item, index }) => {
 
       <div className="flex flex-col gap-3">
         <h2 className="text-2xl font-bold pb-2 ">{item.title}</h2>
-        <p className="text-gray-700">{item.description}</p>
-      </div>
+        <p className="text-gray-700">
+  {item.description.split(" ").length > 20
+    ? `${item.description.split(" ").slice(0, 12).join(" ")}............`
+    : item.description}
+</p>      </div>
       <div className="flex gap-4">
         <Badge>{item.position}</Badge>
         <Badge>{item.jobType}</Badge>

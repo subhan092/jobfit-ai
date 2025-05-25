@@ -11,22 +11,34 @@ import {
 } from "@/components/ui/table"
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getpostedJob } from '../redux/AsynThunk/Job_oprations';
+import { deleteJobbyId, getpostedJob } from '../redux/AsynThunk/Job_oprations';
+import { Loader2 } from 'lucide-react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const PostedJobTable = ({setSelect,setSelectedJob}) => {
 
   const [searchItem , setsearchItem] = useState("")
 
-  const [error, setError] = useState("");
 
-  const {jobs} = useSelector((state)=>state.job)
+  const {jobs ,loading } = useSelector((state)=>state.job)
     const dispatch = useDispatch()
   useEffect(() => {
     
   dispatch(getpostedJob())
   }, [dispatch]);
- 
 
+  const handleDelete = async (id) => {
+    try {
+      const res = await dispatch(deleteJobbyId(id)).unwrap();  
+      toast.success(res.message || "Job deleted successfully");
+      dispatch(getpostedJob())
+    } catch (err) {
+      toast.error(err.message || "Failed to delete job");
+    }
+  };
+ 
+  
   const searchedJob = jobs?.filter((job)=>job.title.toLowerCase().includes(searchItem.toLowerCase()))
   return (
 <>
@@ -82,14 +94,7 @@ const PostedJobTable = ({setSelect,setSelectedJob}) => {
         </div>
         <hr />
         <div className="">
-          {searchedJob.length === 0 ? (
-            <p className='text-center'>No Jobs  found.</p>
-          ) : (
-            searchedJob &&
-            searchedJob.map((item, index) => {
-              return (
-                <Table>
-                  <TableCaption>A list of My posted jobs</TableCaption>
+          <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-[100px]">job Title</TableHead>
@@ -98,11 +103,19 @@ const PostedJobTable = ({setSelect,setSelectedJob}) => {
                       <TableHead className="">Experience</TableHead>
                       <TableHead className="">Salary</TableHead>
                       <TableHead className="">Candidates</TableHead>
+                      <TableHead className="">Action</TableHead>
                       <TableHead>Ranking</TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
-                    <TableRow className="">
+                  
+          {searchedJob.length === 0 ? (
+            <p className='text-center'>No Jobs  found.</p>
+          ) : (
+            searchedJob &&
+            searchedJob.map((item, index) => {
+             return (         
+                  <TableBody key={item._id || index}>
+                    <TableRow  className="">
                       <TableCell className="font-medium">{item?.title}</TableCell>
                       <TableCell>{item?.company?.name}</TableCell>
                       <TableCell>{item?.location}</TableCell>
@@ -119,14 +132,20 @@ const PostedJobTable = ({setSelect,setSelectedJob}) => {
               class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             >
               View
-            </button></TableCell>
-            <TableCell><button className='text-blue-500 font-medium hover:underline active:text-purple-700' onClick={()=>setSelect(4)}>Check</button></TableCell>
+            </button></TableCell> 
+            <TableCell className=""><button  onClick={()=>handleDelete(item._id)} type="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">  {loading ? (
+                <Loader2 className="w-6 h-6 mx-auto animate-spin" />
+              ) : (
+                "Delete"
+              )}</button>
+            </TableCell>
+            <TableCell><button  className='text-blue-500 font-medium hover:underline active:text-purple-700' onClick={()=>setSelect(4)}>Check</button></TableCell>
                     </TableRow>
                   </TableBody>
-                </Table>
               );
             })
           )}
+          </Table>
         </div>
       </div>
     </>  )
