@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pymongo
+sentence-transformers
+scikit-learn
+pdfminer.six
+requests
+python-docx
+google-generativeai
