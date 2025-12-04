@@ -1,3 +1,4 @@
+import axios from "axios";
 import { applicationModel } from "../model/applicationModel.js";
 import jobModel from "../model/jobModel.js";
 
@@ -80,7 +81,7 @@ export const getAppliedJob = async (req,res)=>{
     })
 
     if (!applications) {
-        return res.status(400).json({
+        return res.status(200).json({
             message:"your application not found",
             sucess:false
         })
@@ -121,7 +122,7 @@ export const getAppliedJob = async (req,res)=>{
 
         // If no applicants found
         if (!job.applications || job.applications.length === 0) {
-            return res.status(400).json({
+            return res.status(201).json({
                 message: "No applicants found for this job",
                 success: false
             });
@@ -183,4 +184,20 @@ export const getTotalApplications = async (req, res) => {
   };
   
   
+
+  export const getRankedCandiates =  async (req, res) => {
+    const { jobId } = req.params;
+    console.log("jobid for rankinng",jobId)
+    try {
+      const { data } = await axios.get(
+        `http://127.0.0.1:8000/ranking/${jobId}/ranked-candidates`
+      );
+      res.json(data); // forward response to frontend
+    } catch (error) {
+      console.error("Error calling FastAPI:", error);
+      res.status(500).json({ error: "Failed to fetch ranked candidates" });
+    }
+  };
+  /// view report
+
   

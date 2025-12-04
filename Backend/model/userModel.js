@@ -7,11 +7,29 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: true },
     photo: { type: String },
     role: { type: String, enum: ["user", "recruiter","Admin"]  },
+    verificationCode: {
+      type: String,
+      default: null,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    RecruiterStatus:{
+      type:String,
+      enum:["pending","approved","rejected"],
+      default:"pending"
+    },
     profile: {
         type: {
           bio: { type: String },
           skills: [{ type: String }],
           resume: { type: String },
+          resumeText: { type: String },
+          resumeEmbeddings: {
+            type: [Number],  
+            default: null,
+          },
           OriginalName: { type: String },
           company: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
         },

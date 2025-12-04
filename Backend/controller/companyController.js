@@ -127,14 +127,14 @@ export const updateCompany = async (req, res) => {
     } = req.body;
 
     // console.log("req comp",req.body)
-    if( !name &
-      !description &
-      !location &
-      !website &
-      !email &
-      !phone &
-      !foundedYear &
-      !employeeCount &
+    if( !name ||
+      !description ||
+      !location ||
+      !website ||
+      !email ||
+      !phone ||
+      !foundedYear ||
+      !employeeCount ||
       !req?.file){
         return     res.status(500).json({ success: false, message: "all input field must be provided"});
 

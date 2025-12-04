@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteJobById, getAllJobs, getjobbyId, getLatestData, getPostedJobs, getTotalJobs, getUserJobs, postJob } from '../controller/jobController.js';
+import { deleteJobById, getAllJobs, getjobbyId, getLatestData, getPostedJobs, getReport, getTotalJobs, getUserJobs, postJob } from '../controller/jobController.js';
 import userAuth from '../middlewares/userAuth.js';
 
 const router = express.Router();
@@ -12,5 +12,6 @@ router.route('/get').get(userAuth,getPostedJobs);
 router.route('/total-jobs').get(userAuth,getTotalJobs)
 router.route('/latest-data').get(userAuth,getLatestData)
 router.route('/delete/:id').get(userAuth,deleteJobById)
+router.route('/report/:jobid').get(userAuth,getReport)
 
 export default router;

@@ -2,6 +2,7 @@
 import path from "path";
 import jobModel from "../model/jobModel.js";
 import { applicationModel } from "../model/applicationModel.js";
+import axios from "axios";
 
 export const postJob  = async(req,res)=>{
    try {
@@ -219,3 +220,17 @@ export const getLatestData = async (req, res) => {
   };
   
   
+  // genatate report
+export const getReport = async (req, res) => {
+    try {
+      const { jobid } = req.params;
+      console.log("jobid prams",jobid)
+      const { data } = await axios.get(
+        `http://127.0.0.1:8000/report/report/job/${jobid}`
+      );
+      console.log("report data",data)
+      return res.json(data);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch report" });
+    }
+  };
