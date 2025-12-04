@@ -5,6 +5,7 @@ import applicationSlice from './reducers/applicationSlice'
 import companySlice  from './reducers/companySlice'
 import  dashboardSlice from  './reducers/AdminDB-Slice'
 import userSlice from './reducers/ManageUsersSlice'
+import recruiterSlice from './reducers/PendingRecruiter.Slice'
 export const store = configureStore({
     reducer:{
         auth :authSlice,
@@ -12,7 +13,8 @@ export const store = configureStore({
         application:applicationSlice,
         company:companySlice,
         dashboard: dashboardSlice,
-        users:  userSlice
+        users:  userSlice ,
+        recruiter: recruiterSlice
     }
 })
 

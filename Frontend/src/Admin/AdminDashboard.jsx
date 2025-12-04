@@ -7,6 +7,7 @@ const AdminDashboard = () => {
 
   const navItems = [
     { label: "📊 Dashboard", path: "/admin/dashboard" },
+    { label: "📈 Pending Request", path:"/admin/update-recruiter-status"},
     { label: "👤 Manage Users", path: "/admin/users" },
     { label: "🏢 Recruiters", path: "/admin/recruiters" },
     { label: "📄 Manage Jobs", path: "/admin/jobs/" },

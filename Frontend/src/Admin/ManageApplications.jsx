@@ -20,7 +20,7 @@ const ManageApplications = () => {
   const { applicants} = useSelector((state) => state.application);
     const [searchItem , setsearchItem] = useState("")
   
-    const searchedApplicant = applicants && applicants?.filter((item)=>item.applicant.name.toLowerCase().includes(searchItem.toLowerCase()))
+    const searchedApplicant = applicants && applicants?.filter((item)=>item.applicant?.name.toLowerCase().includes(searchItem.toLowerCase()))
 
   const dispatch = useDispatch()
   useEffect(() => {

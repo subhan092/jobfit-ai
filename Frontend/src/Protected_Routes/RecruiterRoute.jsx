@@ -7,7 +7,13 @@ const RecruiterRoute = ({children}) => {
     const navigate = useNavigate()
        if (user){
            if (user.role == 'recruiter') {
-            return children
+            if (user.RecruiterStatus == "pending" || user.RecruiterStatus == "rejected") {
+                return navigate("/pending-approval")
+            }
+            else{
+                return children
+
+            }
            }
            else if(user.role == 'admin'){
            return navigate('/admin/dashboard')

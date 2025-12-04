@@ -72,26 +72,27 @@ const ManageJobs = ({}) => {
         </div>
         <hr />
         <div className="">
+        <Table>
+            <TableCaption>A list of My posted jobs</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">job Title</TableHead>
+                <TableHead>Company</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead className="">Experience</TableHead>
+                <TableHead className="">Salary</TableHead>
+                <TableHead className="">Candidates</TableHead>
+                <TableHead>Ranking</TableHead>
+              </TableRow>
+            </TableHeader>
           {searchedJob.length === 0 ? (
             <p className='text-center'>No Jobs  found.</p>
           ) : (
             searchedJob &&
             searchedJob.map((item, index) => {
               return (
-                <Table>
-                  <TableCaption>A list of My posted jobs</TableCaption>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[100px]">job Title</TableHead>
-                      <TableHead>Company</TableHead>
-                      <TableHead>Location</TableHead>
-                      <TableHead className="">Experience</TableHead>
-                      <TableHead className="">Salary</TableHead>
-                      <TableHead className="">Candidates</TableHead>
-                      <TableHead>Ranking</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
+          
+                  <TableBody key={item?._id}>
                     <TableRow className="">
                       <TableCell className="font-medium">{item?.title}</TableCell>
                       <TableCell>{item?.company?.name}</TableCell>
@@ -106,13 +107,15 @@ const ManageJobs = ({}) => {
             >
               View
             </button></Link></TableCell>
-            <TableCell><button className='text-blue-500 font-medium hover:underline active:text-purple-700' onClick={()=>setSelect(4)}>Check</button></TableCell>
+            <TableCell><Link to={`/admin/screening/${item._id}`}><button className='text-blue-500 font-medium hover:underline active:text-purple-700' >Check</button>
+            </Link>
+            </TableCell>
                     </TableRow>
                   </TableBody>
-                </Table>
               );
             })
           )}
+           </Table>
         </div>
       </div>
     </>  )

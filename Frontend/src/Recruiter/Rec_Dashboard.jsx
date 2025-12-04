@@ -12,6 +12,8 @@ import { PiRankingDuotone } from "react-icons/pi";
 
 import Job_Post from './Job_Post'
 import Applicants from './Applicants'
+import CheckReport from './CheckReport'
+import { File } from 'lucide-react'
 
 
 const Rec_Dashboard = () => {
@@ -20,7 +22,10 @@ const Rec_Dashboard = () => {
   }, {"key": "Posted jobs" , "icon": <AiOutlineDatabase />
   } , {"key": "New job Post","icon": <FaWpforms />}, {"key": "Candidates" ,"icon":<TbUsersGroup />
   } , {"key": "Ranked Candidate" , "icon": <PiRankingDuotone />
-  } ]
+  } ,
+  {"key":"Download Report", "icon" : <File/>}
+
+]
 
   const [selectedJob, setSelectedJob] = useState(null);
   return (
@@ -46,6 +51,12 @@ const Rec_Dashboard = () => {
        }
         {
          select === 3 ? <Applicants selectedJob={selectedJob}/>  : null
+       }
+       {
+         select === 4 ? <Ranked_Applicant setSelect={setSelect} setSelectedJob={setSelectedJob} selectedJob={selectedJob}/>  : null
+       }
+       {
+        select === 5 ? <CheckReport selectedJob={selectedJob} /> : null
        }
       </div>
    </div>

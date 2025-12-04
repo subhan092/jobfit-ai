@@ -20,7 +20,7 @@ export const getAllJobs = createAsyncThunk("getAllJobs", async (searchTerm, { re
 export const getJobbyId = createAsyncThunk("getJobbyId", async (jobid, { rejectWithValue }) => {
     try {
         const resp = await axios.get(`${JOB_API_END_POINT}/get/${jobid}`);
-        return resp.data.job;  // ✅ Correct return
+        return resp.data.job;  
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || "Something went wrong");
     }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../popover'
 import { Button } from '../button'
 import { Avatar, AvatarImage } from '../avatar'
-import { LayoutDashboardIcon, LogOut, User2 } from 'lucide-react'
+import { LayoutDashboardIcon, LogOut, User2, UserCircleIcon } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 import { USER_API_END_POINT } from '../../../utils/key'
 import { USER_END_POINT } from '../../../endPoint'
 import { logoutUser } from '../../../redux/AsynThunk/User_Auth'
+import userimage  from '../../../assets/user.png'
 
 // import { toast } from 'sonner'
 
@@ -63,8 +64,8 @@ const Navbar = () => {
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <Avatar className="cursor-pointer">
-                                    <AvatarImage  src={user?.photo} />
-                                        {/* <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" /> */}
+                                    <AvatarImage  src={user?.photo ? user.photo : userimage  } />
+                                    {/* <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" /> */}
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-80">
@@ -72,7 +73,7 @@ const Navbar = () => {
                                         <div className='flex gap-2 space-y-2'>
                                             <Avatar className="cursor-pointer">
                                                 {/* <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" /> */}
-                                                <AvatarImage  src={user?.photo} />
+                                                <AvatarImage  src={user?.photo ? user.photo : userimage  } />
                                             </Avatar>
                                             <div>
                                                 <h4 className='font-medium'>{user?.name}</h4>

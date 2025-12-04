@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";  // Corrected navigate function
+import { Link, useNavigate } from "react-router-dom";  
 import { USER_END_POINT } from "../endPoint";
 import { toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../redux/reducers/authslice";
 import Navbar from "./ui/shared/Navbar";
 import Footer from "./Footer";
-import { looadUser } from "../redux/AsynThunk/User_Auth";
 
 const Registor = () => {
     const [role , setRole] = useState("");
@@ -42,18 +41,26 @@ const Registor = () => {
                headers: { "Content-Type": "multipart/form-data" },
                withCredentials: true,
            });
+           setEmail("")
+           setPassword("")
+           setphoneNumber("")
+           setName("")
+           setfile("")
+           setRole("")
            if (response.data.success) {
-             await  toast.success(response.data.message || "user register successfully");
+              toast.success(response.data.message || "hello .........");
+              localStorage.setItem("verify-email",response?.data?.user?.email)
+              navigate("/verify-email")
            }
-           navigate("/login");
            
        } catch (error) {
-           toast.error(error.response?.data?.message || "Registration failed");
-           console.error("Error in registration", error);
+            toast.error(error.response?.data?.message || "Registration failed");
+            console.error("Error in registration", error);
        }
        finally{
         dispatch(setLoading(false))
        }
+
    };
 
    return (

@@ -55,7 +55,7 @@ const AppliedJobs = () => {
         <TableRow key={index}>
            <TableCell className="font-medium">23-03-2025</TableCell>
            <TableCell>{item?.job?.title}</TableCell>
-           <TableCell>{item?.job?.company?.companyName}</TableCell>
+           <TableCell>{item?.job?.company?.name}</TableCell>
            <TableCell className="text-right"><Badge>{item?.status}</Badge></TableCell>
         </TableRow>
        )) : <div>No jobs found  </div>

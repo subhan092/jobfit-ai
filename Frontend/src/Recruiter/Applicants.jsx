@@ -34,22 +34,26 @@ const Applicants = ({ setSelect, selectedJob }) => {
   const searchedApplicant =
     applicants &&
     applicants?.filter((item) =>
-      item.applicant.name.toLowerCase().includes(searchItem.toLowerCase())
+      item.applicant?.name.toLowerCase().includes(searchItem.toLowerCase())
     );
 
   const dispatch = useDispatch();
   useEffect(() => {
     const getapplicants = async () => {
-      if (selectedJob?._id) {
+      if (selectedJob) {
         console.log("Fetching applicants for Job ID:", selectedJob._id);
         await dispatch(getApplicants(selectedJob._id));
       }
     };
 
     getapplicants();
-  }, [dispatch, selectedJob?._id]);
+
+
+  }, [dispatch, selectedJob]);
 
   console.log("applicants", applicants);
+
+
   return (
     <div className="px-10">
       <div className="flex  pt-8 pb-4  justify-between">
@@ -102,8 +106,8 @@ const Applicants = ({ setSelect, selectedJob }) => {
       </div>
       <hr />
       <div>
-        {searchedApplicant && searchedApplicant?.length === 0 ? (
-          <p className="text-center">No Applicants found for this job.</p>
+        {applicants == undefined ? (
+          <p className="text-center text-gray-700 font-bold text-xl">No Applicants found for this job.</p>
         ) : (
           <Table>
             <TableCaption>A list of Candidates</TableCaption>
@@ -113,7 +117,8 @@ const Applicants = ({ setSelect, selectedJob }) => {
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead className="">Resume</TableHead>
-                <TableHead className="">Status</TableHead>
+                <TableHead className="">Current Status</TableHead>
+                <TableHead className="">change Status</TableHead>
                 <TableHead className="text-right">Contact</TableHead>
               </TableRow>
             </TableHeader>
@@ -136,6 +141,7 @@ const Applicants = ({ setSelect, selectedJob }) => {
                         View Resume
                       </a>
                     </TableCell>
+                    <TableCell>{item?.status}</TableCell>
                     <TableCell className="">
                       <select
                         value={status}
@@ -148,9 +154,12 @@ const Applicants = ({ setSelect, selectedJob }) => {
                       </select>
                     </TableCell>
                     <TableCell className="text-right">
+                    <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${item?.applicant?.email}&su=Regarding%20Your%20Application&body=Hello%20${item?.applicant?.name},%0D%0AWe%20are%20interested%20in%20your%20profile.`
+} target="_blank" rel="noopener noreferrer">
                       <button className="bg-purple-500 hover:bg-purple-700 transition text-white px-6 py-4 rounded-xl">
                         <MailIcon />
                       </button>
+                      </a>
                     </TableCell>
                   </TableRow>
                 ))}

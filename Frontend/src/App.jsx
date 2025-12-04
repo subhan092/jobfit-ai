@@ -31,6 +31,13 @@ import GenralRoute from "./Protected_Routes/GenralRoute";
 import ManageCompanies from "./Admin/ManageCompanies";
 import ManageJobs from "./Admin/ManageJobs";
 import ManageApplications from "./Admin/ManageApplications";
+import Otp_verification from "./pages/Otp_verification";
+import ForgotPassword from "./components/ForgotPassword";
+import ManageRanking from "./Admin/ManageRanking";
+import ManageReport from "./Admin/ManageReport";
+import PendingApproval from "./pages/PendingApproval";
+import ManageStatus from "./Admin/ManageStatus";
+import ManageRecruiterStatus from "./Admin/ManageStatus";
 
 const App = () => {
   const dispatch = useDispatch()
@@ -42,18 +49,22 @@ const App = () => {
     <BrowserRouter>
     <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
+      <Route path="/verify-email" element={<Otp_verification/>}/>
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<LoginRoute> <Login/> </LoginRoute>}/>
+        <Route path="/forgot-password" element={<LoginRoute> <ForgotPassword/> </LoginRoute>}/>     
         <Route path="/registor" element={<LoginRoute> <Registor/> </LoginRoute>}/>
         <Route path="/jobs" element={<Jobs/>}/>
         <Route path="/browse" element={<Browse/>}/>
         <Route path="/dashboard" element={<UserRoute> <Dashborad/> </UserRoute>}/>
         <Route path="/job/:jobid" element={<JobDespcrition/>}/>
+        <Route path='/pending-approval' element={<PendingApproval/>}/>
 
         {/* Recruiter  */}
         <Route path="/recruiter/dashboard" element={<RecruiterRoute> <Rec_Dashboard/> </RecruiterRoute>}/>
         <Route path="/registor/company" element={<RecruiterRoute> <Registor_Company/> </RecruiterRoute>}/>
         <Route path="/job-post" element={<RecruiterRoute> <Job_Post/> </RecruiterRoute>}/>
+
 
         {/* Admin */}
         <Route path="/admin/" element={<AdminProtectedRoute> <AdminDashboard/></AdminProtectedRoute>}>
@@ -65,6 +76,10 @@ const App = () => {
           <Route path="companies" element={<ManageCompanies/>}></Route>
           <Route path="jobs/:id" element={<ManageJobs/>}></Route>
           <Route path="applications/:jobid" element={<ManageApplications/>}></Route>
+          <Route path="screening/:jobId" element={<ManageRanking/>}></Route>
+          <Route path="reports/:jobId" element={<ManageReport/>}></Route>
+          <Route path="update-recruiter-status" element={<ManageRecruiterStatus/>}></Route>
+
         </Route>
 
         {/* genral route */}
